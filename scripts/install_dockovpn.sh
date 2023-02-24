@@ -59,7 +59,8 @@ echo -e "\e[33mLe fichier client.opvn est disponible à l'adresse ${URL}/${FOLDE
 # Attendre que l'utilisateur ait téléchargé le fichier
 read -p "Appuyez sur Entrée une fois que vous avez téléchargé le fichier client.zip. Le fichier sera supprimé!"
 
-# Désinstaller Apache et supprimer le fichier client.opvn
+# Désinstaller Apache et supprimer le fichier client.opvn et client.zip
+sudo rm client.zip && sudo rm client.ovpn
 sudo apt-get remove --purge apache2 -y
 sudo rm -f /var/www/
 
