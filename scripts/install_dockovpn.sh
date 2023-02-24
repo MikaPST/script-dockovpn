@@ -1,11 +1,5 @@
 #!/bin/bash
 
-###### Script Install Docker and Docker-Compose ######
-# Projet Github by MikaPST
-# https://github.com/MikaPST/script-install-docker-dockercompose
-
-curl -sL https://raw.githubusercontent.com/MikaPST/script-install-docker-dockercompose/main/install_docker.sh | sudo bash
-
 ###### Dockovpn ######
 # Projet Github by alekslitvinenk
 # https://github.com/dockovpn/dockovpn
