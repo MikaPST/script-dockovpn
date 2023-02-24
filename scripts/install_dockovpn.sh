@@ -18,10 +18,10 @@ services:
         HOST_ADDR: \${HOST_ADDR}
     volumes:
         - ./openvpn_conf:/doc/Dockovpn
-    restart: always"
+    restart: always
 EOF
 
-cat $DOCKVOPN_CONFIG > docker-compose.yml
+echo "$DOCKVOPN_CONFIG" > docker-compose.yml
 
 # Exécution de Dockovpn avec Docker-Compose
 echo HOST_ADDR=$(curl -s https://api.ipify.org) > .env && \
