@@ -32,7 +32,7 @@ services:
     environment:
         HOST_ADDR: ${HOST_ADDR}
     volumes:
-        - ./openvpn_conf:/doc/Dockovpn
+        - ~/openvpn_conf:/doc/Dockovpn
     restart: always
 EOF
 cd ~/
@@ -56,11 +56,11 @@ echo HOST_ADDR=$(curl -s https://api.ipify.org) > .env && \
 sudo docker-compose exec -d dockovpn wget -O /doc/Dockovpn/client.ovpn localhost:8080
 
 # Vérification que le fichier client.ovpn a été correctement téléchargé
-if [ ! -f "openvpn_conf/client.ovpn" ]; then
+if [ ! -f "~/openvpn_conf/client.ovpn" ]; then
     echo "Le fichier client.ovpn n'a pas été téléchargé avec succès depuis le conteneur OpenVPN. Veuillez vérifier les logs Docker pour plus d'informations."
     exit 1
 fi
-cd openvpn_conf/
+cd ~/openvpn_conf/
 
 # Installation des modules Apache et Zip
 sudo apt-get install apache2 -y
