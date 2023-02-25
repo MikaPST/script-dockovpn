@@ -7,26 +7,19 @@
 # Vérification de la présence de Docker et de Docker Compose
 if ! command -v docker &> /dev/null; then
     echo "Docker n'est pas installé sur ce système. Installation automatique via le repo github MikaPST/script-docker-dockercompose."
-    git clone https://github.com/MikaPST/script-docker-dockercompose.git \
-    && cd script-docker-dockercompose/ \
-    && sudo chmod +x start.sh \
-    && sudo ./start.sh \
-    && cd .. \
-    && sudo rm -rf script-docker-dockercompose
+    sudo chmod +x install_docker_dockercompose.sh && \
+    sudo ./install_docker_dockercompose.sh
 fi
 
 if ! command -v docker-compose &> /dev/null; then
     echo "Docker Compose n'est pas installé sur ce système. Installation automatique via le repo github MikaPST/script-docker-dockercompose."
-    git clone https://github.com/MikaPST/script-docker-dockercompose.git \
-    && cd script-docker-dockercompose/ \
-    && sudo chmod +x start.sh \
-    && sudo ./start.sh \
-    && cd .. \
-    && sudo rm -rf script-docker-dockercompose  
+    sudo chmod +x install_docker_dockercompose.sh && \
+    sudo ./install_docker_dockercompose.sh
 fi
 
 #Création du fichier docker-compose.yml dans le dossier git projet Script Dockovpn
 HOST_ADDR=$(curl -s https://api.ipify.org) && \
+cd ~/ && \
 cat << EOF > docker-compose.yml
 version: '3'
 services:
@@ -62,11 +55,11 @@ echo HOST_ADDR=$(curl -s https://api.ipify.org) > .env && \
 sudo docker-compose exec -d dockovpn wget -O /doc/Dockovpn/client.ovpn localhost:8080
 
 # Vérification que le fichier client.ovpn a été correctement téléchargé
-if [ ! -f "openvpn_conf/client.ovpn" ]; then
+if [ ! -f "~/openvpn_conf/client.ovpn" ]; then
     echo "Le fichier client.ovpn n'a pas été téléchargé avec succès depuis le conteneur OpenVPN. Veuillez vérifier les logs Docker pour plus d'informations."
     exit 1
 fi
-cd openvpn_conf/
+cd ~/openvpn_conf/
 
 # Installation des modules Apache et Zip
 sudo apt-get install apache2 -y
