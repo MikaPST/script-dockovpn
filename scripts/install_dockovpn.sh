@@ -4,8 +4,32 @@
 # Projet Github by alekslitvinenk
 # https://github.com/dockovpn/dockovpn
 
+# Vérification de la présence de Docker et de Docker Compose
+if ! command -v docker &> /dev/null; then
+    echo "Docker n'est pas installé sur ce système. Installation automatique via le repo github MikaPST/script-docker-dockercompose."
+    git clone https://github.com/MikaPST/script-docker-dockercompose.git \
+    && cd script-docker-dockercompose/ \
+    && sudo chmod +x start.sh \
+    && sudo ./start.sh \
+    && cd .. \
+    && sudo rm -rf script-docker-dockercompose
+    exit 1
+fi
+
+if ! command -v docker-compose &> /dev/null; then
+    echo "Docker Compose n'est pas installé sur ce système. Installation automatique via le repo github MikaPST/script-docker-dockercompose."
+    git clone https://github.com/MikaPST/script-docker-dockercompose.git \
+    && cd script-docker-dockercompose/ \
+    && sudo chmod +x start.sh \
+    && sudo ./start.sh \
+    && cd .. \
+    && sudo rm -rf script-docker-dockercompose  
+    exit 1
+fi
+
 #Création du fichier docker-compose.yml dans le dossier git projet Script Dockovpn
-DOCKVOPN_CONFIG=<<EOF 
+cd \
+DOCKVOPN_CONFIG=$(cat <<EOF 
 version: '3'
 services:
   dockovpn:
@@ -15,17 +39,16 @@ services:
     ports:
         - 1194:1194/udp
     environment:
-        HOST_ADDR: \${HOST_ADDR}
+        HOST_ADDR: ${HOST_ADDR}
     volumes:
         - ./openvpn_conf:/doc/Dockovpn
     restart: always
 EOF
+)
 
-cd
 echo "$DOCKVOPN_CONFIG" > docker-compose.yml
 
 # Exécution de Dockovpn avec Docker-Compose
-echo HOST_ADDR=$(curl -s https://api.ipify.org) > .env && \
 sudo docker-compose up -d
 
 # Voir les dockers en fonctionnement
@@ -40,8 +63,15 @@ done
 
 # Téléchargement du fichier client.opvn depuis le docker Dockovpn
 echo "Téléchargement du fichier client.opvn depuis le docker Dockovpn..."
+echo HOST_ADDR=$(curl -s https://api.ipify.org) > .env && \
 sudo docker-compose exec -d dockovpn wget -O /doc/Dockovpn/client.ovpn localhost:8080
-cd openvpn_conf && ls
+
+# Vérification que le fichier client.ovpn a été correctement téléchargé
+if [ ! -f "openvpn_conf/client.ovpn" ]; then
+    echo "Le fichier client.ovpn n'a pas été téléchargé avec succès depuis le conteneur OpenVPN. Veuillez vérifier les logs Docker pour plus d'informations."
+    exit 1
+fi
+cd openvpn_conf/
 
 # Installation des modules Apache et Zip
 sudo apt-get install apache2 -y
