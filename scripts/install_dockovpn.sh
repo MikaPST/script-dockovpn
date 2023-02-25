@@ -19,11 +19,12 @@ fi
 
 #Création du fichier docker-compose.yml dans le dossier git projet Script Dockovpn
 HOST_ADDR=$(curl -s https://api.ipify.org)
-cat << EOF > docker-compose.yml
+cat << EOF > ~/docker-compose.yml
 version: '3'
 services:
   dockovpn:
     image: alekslitvinenk/openvpn
+    container_name: dockovpn
     cap_add:
         - NET_ADMIN
     ports:
@@ -34,6 +35,7 @@ services:
         - ./openvpn_conf:/doc/Dockovpn
     restart: always
 EOF
+cd ~/
 
 # Exécution de Dockovpn avec Docker-Compose
 sudo docker-compose up -d
