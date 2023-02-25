@@ -1,5 +1,9 @@
 # script-install-dockovpn
 
 ```bash
-curl -sL https://raw.githubusercontent.com/MikaPST/script-install-dockovpn/main/scripts/install_dockovpn.sh | sudo bash
+git clone https://github.com/MikaPST/script-dockovpn.git \
+&& cd script-dockovpn/scripts/ \
+&& sudo chmod +x install_dockovpn.sh \
+&& sudo ./install_dockovpn.sh \
+&& cd ../..
 ```
