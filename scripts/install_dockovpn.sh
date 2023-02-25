@@ -58,7 +58,7 @@ if [ ! -f "openvpn_conf/client.ovpn" ]; then
     echo "Le fichier client.ovpn n'a pas été téléchargé avec succès depuis le conteneur OpenVPN. Veuillez vérifier les logs Docker pour plus d'informations."
     exit 1
 fi
-cd /openvpn_conf/
+cd openvpn_conf/
 
 # Installation des modules Apache et Zip
 sudo apt-get install apache2 -y
