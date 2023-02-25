@@ -26,8 +26,8 @@ if ! command -v docker-compose &> /dev/null; then
 fi
 
 #Création du fichier docker-compose.yml dans le dossier git projet Script Dockovpn
-cd \
-DOCKVOPN_CONFIG=$(cat <<EOF 
+HOST_ADDR=$(curl -s https://api.ipify.org) && \
+cat << EOF > docker-compose.yml
 version: '3'
 services:
   dockovpn:
@@ -37,14 +37,11 @@ services:
     ports:
         - 1194:1194/udp
     environment:
-        HOST_ADDR: ${HOST_ADDR}
+        HOST_ADDR:${HOST_ADDR}
     volumes:
         - ./openvpn_conf:/doc/Dockovpn
     restart: always
 EOF
-)
-
-echo "$DOCKVOPN_CONFIG" > docker-compose.yml
 
 # Exécution de Dockovpn avec Docker-Compose
 sudo docker-compose up -d
