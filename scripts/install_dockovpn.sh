@@ -54,7 +54,7 @@ echo "Téléchargement du fichier client.opvn depuis le docker Dockovpn..."
 sudo docker-compose exec -d dockovpn wget -O /doc/Dockovpn/client.ovpn localhost:8080
 
 # Vérification que le fichier client.ovpn a été correctement téléchargé
-if [ ! -f "./openvpn_conf/client.ovpn" ]; then
+if [ ! -f "openvpn_conf/client.ovpn" ]; then
     echo "Le fichier client.ovpn n'a pas été téléchargé avec succès depuis le conteneur OpenVPN. Veuillez vérifier les logs Docker pour plus d'informations."
     exit 1
 fi
