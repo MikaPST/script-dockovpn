@@ -18,9 +18,8 @@ if ! command -v docker-compose &> /dev/null; then
 fi
 
 #Création du fichier docker-compose.yml dans le dossier git projet Script Dockovpn
-cd ~/
 HOST_ADDR=$(curl -s https://api.ipify.org) && \
-cat << EOF > docker-compose.yml
+cat << EOF > ~/docker-compose.yml
 version: '3'
 services:
   dockovpn:
@@ -37,7 +36,7 @@ services:
 EOF
 
 # Exécution de Dockovpn avec Docker-Compose
-sudo docker-compose up -d
+sudo cd ~/ && sudo docker-compose up -d
 
 # Voir les dockers en fonctionnement
 sudo docker ps -a
