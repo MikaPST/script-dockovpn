@@ -13,7 +13,6 @@ if ! command -v docker &> /dev/null; then
     && sudo ./start.sh \
     && cd .. \
     && sudo rm -rf script-docker-dockercompose
-    exit 1
 fi
 
 if ! command -v docker-compose &> /dev/null; then
@@ -24,7 +23,6 @@ if ! command -v docker-compose &> /dev/null; then
     && sudo ./start.sh \
     && cd .. \
     && sudo rm -rf script-docker-dockercompose  
-    exit 1
 fi
 
 #Création du fichier docker-compose.yml dans le dossier git projet Script Dockovpn
