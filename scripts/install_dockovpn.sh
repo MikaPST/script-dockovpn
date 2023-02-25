@@ -4,7 +4,7 @@
 # Projet Github by alekslitvinenk
 # https://github.com/dockovpn/dockovpn
 
-#Création du fichier docker-compose.yml
+#Création du fichier docker-compose.yml dans le dossier git projet Script Dockovpn
 DOCKVOPN_CONFIG=<<EOF 
 version: '3'
 services:
@@ -21,6 +21,7 @@ services:
     restart: always
 EOF
 
+cd /script-dockovpn
 echo "$DOCKVOPN_CONFIG" > docker-compose.yml
 
 # Exécution de Dockovpn avec Docker-Compose
@@ -31,7 +32,7 @@ sudo docker-compose up -d
 sudo docker ps -a
 
 # Temporisation d'initialisation du conteneur docker Dockovpn
-echo "Initialisation de Dockovpn, veuillez patienter 10 secondes."
+echo "Initialisation de DockOvpn, veuillez patienter 10 secondes."
 for i in {10..1}; do
     echo "Temps restant: $i secondes..."
     sleep 1
