@@ -29,7 +29,7 @@ services:
     ports:
         - 1194:1194/udp
     environment:
-        HOST_ADDR:${HOST_ADDR}
+        HOST_ADDR: ${HOST_ADDR}
     volumes:
         - ./openvpn_conf:/doc/Dockovpn
     restart: always
