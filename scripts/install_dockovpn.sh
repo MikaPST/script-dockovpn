@@ -18,8 +18,8 @@ if ! command -v docker-compose &> /dev/null; then
 fi
 
 #Création du fichier docker-compose.yml dans le dossier git projet Script Dockovpn
+cd ~/
 HOST_ADDR=$(curl -s https://api.ipify.org) && \
-cd ~/ && \
 cat << EOF > docker-compose.yml
 version: '3'
 services:
