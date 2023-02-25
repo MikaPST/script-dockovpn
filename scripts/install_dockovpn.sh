@@ -21,7 +21,7 @@ services:
     restart: always
 EOF
 
-cd /script-dockovpn
+cd
 echo "$DOCKVOPN_CONFIG" > docker-compose.yml
 
 # Exécution de Dockovpn avec Docker-Compose
@@ -55,7 +55,7 @@ sudo zip client.zip client.ovpn && sudo cp client.zip /var/www/html/$FOLDER_CLIE
 # Informe l'utilisateur que le fichier est disponible à l'adresse URL
 IP=$(curl -s https://api.ipify.org)
 URL="http://${IP}"
-echo -e "\e[33mLe fichier client.opvn est disponible à l'adresse\e[0m \e[32m${URL}/${FOLDER_CLIENT}/client.zip\e[0m. Veuillez le télécharger.\e[0m"
+echo -e "\e[33mLe fichier client.opvn est disponible à l'adresse\e[0m \e[32m${URL}/${FOLDER_CLIENT}/client.zip\e[0m\e[33m. Veuillez le télécharger.\e[0m"
 echo -e "\033[31mAppuyez sur Entrée une fois que vous avez téléchargé le fichier client.zip. Le fichier sera supprimé!\033[0m"
 
 # Attendre que l'utilisateur ait téléchargé le fichier
