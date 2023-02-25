@@ -19,7 +19,7 @@ fi
 
 #Création du fichier docker-compose.yml dans le dossier git projet Script Dockovpn
 HOST_ADDR=$(curl -s https://api.ipify.org)
-cat << EOF > ~/docker-compose.yml
+cat << EOF > docker-compose.yml
 version: '3'
 services:
   dockovpn:
@@ -32,10 +32,9 @@ services:
     environment:
         HOST_ADDR: ${HOST_ADDR}
     volumes:
-        - ~/openvpn_conf:/doc/Dockovpn
+        - ./openvpn_conf:/doc/Dockovpn
     restart: always
 EOF
-cd ~/
 
 # Exécution de Dockovpn avec Docker-Compose
 sudo docker-compose up -d
@@ -44,23 +43,23 @@ sudo docker-compose up -d
 sudo docker ps -a
 
 # Temporisation d'initialisation du conteneur docker Dockovpn
-echo "Initialisation de DockOvpn, veuillez patienter 10 secondes."
-for i in {10..1}; do
+echo "Initialisation de DockOvpn, veuillez patienter 5 secondes."
+for i in {5..1}; do
     echo "Temps restant: $i secondes..."
     sleep 1
 done
 
 # Téléchargement du fichier client.opvn depuis le docker Dockovpn
 echo "Téléchargement du fichier client.opvn depuis le docker Dockovpn..."
-echo HOST_ADDR=$(curl -s https://api.ipify.org) > .env && \
+# echo HOST_ADDR=$(curl -s https://api.ipify.org) > .env && \
 sudo docker-compose exec -d dockovpn wget -O /doc/Dockovpn/client.ovpn localhost:8080
 
-# Vérification que le fichier client.ovpn a été correctement téléchargé
-if [ ! -f "~/openvpn_conf/client.ovpn" ]; then
-    echo "Le fichier client.ovpn n'a pas été téléchargé avec succès depuis le conteneur OpenVPN. Veuillez vérifier les logs Docker pour plus d'informations."
-    exit 1
-fi
-cd ~/openvpn_conf/
+# # Vérification que le fichier client.ovpn a été correctement téléchargé
+# if [ ! -f "openvpn_conf/client.ovpn" ]; then
+#     echo "Le fichier client.ovpn n'a pas été téléchargé avec succès depuis le conteneur OpenVPN. Veuillez vérifier les logs Docker pour plus d'informations."
+#     exit 1
+# fi
+cd openvpn_conf/ && ll
 
 # Installation des modules Apache et Zip
 sudo apt-get install apache2 -y
