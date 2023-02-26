@@ -4,20 +4,20 @@
 # Projet Github by alekslitvinenk
 # https://github.com/dockovpn/dockovpn
 
-# Vérification de la présence de Docker et de Docker Compose
+# Check for the presence of Docker and Docker Compose
 if ! command -v docker &> /dev/null; then
-    echo "Docker n'est pas installé sur ce système. Installation automatique via le repo github MikaPST/script-docker-dockercompose."
+    echo "Docker is not installed on this system. Automatic installation via the MikaPST/script-docker-dockercompose Github repo."
     sudo chmod +x install_docker_dockercompose.sh && \
     sudo ./install_docker_dockercompose.sh
 fi
 
 if ! command -v docker-compose &> /dev/null; then
-    echo "Docker Compose n'est pas installé sur ce système. Installation automatique via le repo github MikaPST/script-docker-dockercompose."
+    echo "Docker Compose is not installed on this system. Automatic installation via the MikaPST/script-docker-dockercompose Github repo."
     sudo chmod +x install_docker_dockercompose.sh && \
     sudo ./install_docker_dockercompose.sh
 fi
 
-#Création du fichier docker-compose.yml dans le dossier git projet Script Dockovpn
+# Create the docker-compose.yml file in the Dockovpn project's Git folder
 HOST_ADDR=$(curl -s https://api.ipify.org)
 cat << EOF > docker-compose.yml
 version: '3'
@@ -36,52 +36,52 @@ services:
     restart: always
 EOF
 
-# Exécution de Dockovpn avec Docker-Compose
+# Run Dockovpn with Docker-Compose
 sudo docker-compose up -d
 
-# Voir les dockers en fonctionnement
+# View running Docker containers
 sudo docker ps -a
 
-# Temporisation d'initialisation du conteneur docker Dockovpn
-echo "Initialisation de DockOvpn, veuillez patienter 5 secondes."
+# Wait for DockOvpn Docker container initialization
+echo "Initializing DockOvpn, please wait for 5 seconds."
 for i in {5..1}; do
-    echo "Temps restant: $i secondes..."
+    echo "Time remaining: $i seconds..."
     sleep 1
 done
 
-# Téléchargement du fichier client.opvn depuis le docker Dockovpn
-echo "Téléchargement du fichier client.opvn depuis le docker Dockovpn..."
+# Download the client.opvn file from the Dockovpn Docker container
+echo "Downloading the client.opvn file from the Dockovpn Docker container..."
 sudo docker-compose exec -d dockovpn wget -O /doc/Dockovpn/client.ovpn localhost:8080
 
-# Vérification que le fichier client.ovpn a été correctement téléchargé
+# Check that the client.ovpn file was downloaded successfully
 if ! find openvpn_conf/ -name "client.ovpn" -print -quit | grep -q "."; then
-    echo -e "\033[31mLe fichier client.ovpn n'a pas été téléchargé avec succès depuis le conteneur OpenVPN. Veuillez vérifier les logs Docker pour plus d'informations.\033[0m"
+    echo -e "\033[31mThe client.ovpn file was not downloaded successfully from the OpenVPN container. Please check Docker logs for more information.\033[0m"
     exit 1
 fi
 
 cd openvpn_conf/
 
-# Installation des modules Apache et Zip
+# Install Apache and Zip modules
 sudo apt-get install apache2 -y
 sudo apt-get install zip -y
 
-# Compression du fichier client.opvn et copie dans un dossier au nom aléatoir vers le dossier html pour téléchargement
+# Compress the client.opvn file and copy to a randomly named folder for download
 FOLDER_CLIENT=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 10 | head -n 1)
 sudo mkdir /var/www/html/$FOLDER_CLIENT/
 sudo zip client.zip client.ovpn && sudo cp client.zip /var/www/html/$FOLDER_CLIENT/
 
-# Informe l'utilisateur que le fichier est disponible à l'adresse URL
+# Inform the user that the file is available at the URL
 IP=$(curl -s https://api.ipify.org)
 URL="http://${IP}"
-echo -e "\e[33mLe fichier client.opvn est disponible à l'adresse\e[0m \e[32m${URL}/${FOLDER_CLIENT}/client.zip\e[0m\e[33m. Veuillez le télécharger.\e[0m"
-echo -e "\033[31mAppuyez sur Entrée une fois que vous avez téléchargé le fichier client.zip. Le fichier sera supprimé!\033[0m"
+echo -e "\e[33mThe client.opvn file is available at the address\e[0m \e[32m${URL}/${FOLDER_CLIENT}/client.zip\e[0m\e[33m. Please download it.\e[0m"
+echo -e "\033[31mPress Enter once you have downloaded the client.zip file. The file will be deleted!\033[0m"
 
-# Attendre que l'utilisateur ait téléchargé le fichier
+# Wait for the user to download the file
 read
 
-# Désinstaller Apache et supprimer le fichier client.opvn et client.zip
+# Uninstall Apache and delete the client.opvn and client.zip files
 sudo rm client.zip && sudo rm client.ovpn
 sudo apt-get remove --purge apache2 -y
 sudo rm -f /var/www/
 
-echo -e "\e[32mInstallation terminée, vous pouvez dès à présent utiliser DockOvpn en utilisant le client OpenVPN et la configuration du fichier client.ovpn téléchargé précédemment.\e[0m"
+echo -e "\e[32mInstallation complete, you can now use DockOvpn by using the OpenVPN client and the configuration from the previously downloaded client.ovpn file.\e[0m"
