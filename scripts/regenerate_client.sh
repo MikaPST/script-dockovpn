@@ -4,10 +4,6 @@
 # Projet Github by alekslitvinenk
 # https://github.com/dockovpn/dockovpn
 
-# Download the client.opvn file from the Dockovpn Docker container
-echo "Downloading the client.opvn file from the Dockovpn Docker container..."
-sudo docker-compose exec -d dockovpn wget -O /doc/Dockovpn/client.ovpn localhost:8080
-
 # Check that the client.ovpn file was downloaded successfully
 if ! find openvpn_conf/ -name "client.ovpn" -print -quit | grep -q "."; then
     echo -e "\033[31mThe client.ovpn file was not downloaded successfully from the OpenVPN container. Please check Docker logs for more information.\033[0m"
@@ -50,7 +46,7 @@ echo -e "\033[31mPress Enter once you have downloaded the client.zip file. The f
 read
 
 # Uninstall Apache and delete the client.opvn and client.zip files
-sudo rm client.zip && sudo rm client.ovpn
+sudo rm client.zip
 sudo apt-get remove --purge apache2 -y
 sudo rm -f /var/www/
 
