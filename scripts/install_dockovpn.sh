@@ -82,6 +82,6 @@ read
 # Uninstall Apache and delete the client.zip files
 sudo rm client.zip
 sudo apt-get remove --purge apache2 -y
-sudo rm -f /var/www/
+sudo rm -r /var/www/
 
 echo -e "\e[32mInstallation complete, you can now use DockOvpn by using the OpenVPN client and the configuration from the previously downloaded client.ovpn file.\e[0m"
