@@ -30,6 +30,7 @@ if ! command -v apache2 &> /dev/null; then
     echo "Apache web server is not installed. Loading installation..."
     sudo apt-get update -y
     sudo apt-get install apache2 -y
+    sudo apache2 reload
     echo "\e[32mApache web server successfully installed.\e[0m"
 else
     echo "\e[32mThe Apache web server is already installed.\e[0m"
