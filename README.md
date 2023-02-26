@@ -1,5 +1,5 @@
 <p align=center>
-<img src="https://github.com/MikaPST/script-docker-dockercompose/blob/main/logo-script-DockerAndDockerCompose.png?raw=true" height="350">
+<img src="https://github.com/MikaPST/script-dockovpn/blob/main/logo-script-dockovpn.png?raw=true" height="250">
 </p><br>
 
 [![License: GPL v2](https://img.shields.io/badge/License-GPL_v2-orange.svg)](https://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html)
