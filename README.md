@@ -66,7 +66,7 @@ mkdir setup_docker \
 If for some reason you have to retrieve the client.opvn file again you can run this command.
 
 ```bash
-cd "$(dirname "$(find ~/ -name "regenerate_client.sh")")" \
-&& sudo chmod +x regenerate_client.sh \
+curl -o regenerate_client.sh https://raw.githubusercontent.com/MikaPST/script-dockovpn/main/scripts/regenerate_client.sh \
+&& chmod +x regenerate_client.shh \
 && sudo ./regenerate_client.sh
 ```
