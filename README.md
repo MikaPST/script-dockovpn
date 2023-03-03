@@ -67,6 +67,6 @@ If for some reason you have to retrieve the client.opvn file again you can run t
 
 ```bash
 curl -o regenerate_client.sh https://raw.githubusercontent.com/MikaPST/script-dockovpn/main/scripts/regenerate_client.sh \
-&& chmod +x regenerate_client.shh \
+&& chmod +x regenerate_client.sh \
 && sudo ./regenerate_client.sh
 ```
