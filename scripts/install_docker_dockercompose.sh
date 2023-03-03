@@ -4,9 +4,8 @@
 # Projet Github by MikaPST
 # https://github.com/MikaPST/script-docker-dockercompose
 
-git clone https://github.com/MikaPST/script-docker-dockercompose.git \
-&& cd script-docker-dockercompose/ \
-&& sudo chmod +x start.sh \
-&& sudo ./start.sh \
-&& cd .. \
-&& sudo rm -rf script-docker-dockercompose
+mkdir setup_docker \
+&& curl -o setup_docker/start.sh https://raw.githubusercontent.com/MikaPST/script-docker-dockercompose/main/start.sh \
+&& chmod +x setup_docker/start.sh \
+&& sudo ./setup_docker/start.sh \
+&& rm -r setup_docker/
