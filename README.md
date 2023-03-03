@@ -46,7 +46,7 @@ Complete installation of the [DockOvpn Project](https://github.com/dockovpn/dock
 ```bash
 curl -o install_dockovpn.sh https://raw.githubusercontent.com/MikaPST/script-dockovpn/main/scripts/install_dockovpn.sh \
 && chmod +x install_dockovpn.sh \
-&& ./install_dockovpn.sh
+&& sudo ./install_dockovpn.sh
 ```
 
 ## 🐳 Installation of Docker and Docker-Compose Only
