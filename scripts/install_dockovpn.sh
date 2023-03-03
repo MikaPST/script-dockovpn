@@ -94,7 +94,7 @@ echo -e "\033[31mPress Enter once you have downloaded the client.zip file. The f
 read
 
 # Uninstall Apache and delete the client.zip and client.ovpn files
-sudo rm client.zip && sudo rm client.ovpn
+sudo rm client.zip
 sudo apt-get remove --purge apache2 -y
 sudo rm -r /var/www/
 
