@@ -5,12 +5,12 @@
 # https://github.com/dockovpn/dockovpn
 
 # Check that the client.ovpn file was downloaded successfully
-if ! find openvpn_conf/ -name "client.ovpn" -print -quit | grep -q "."; then
+if ! find . -name "client.ovpn" -print -quit | grep -q "."; then
     echo -e "\033[31mThe client.ovpn file was not downloaded successfully from the OpenVPN container. Please check Docker logs for more information.\033[0m"
     exit 1
 fi
 
-cd "$(dirname "$(find ~/ -name "client.ovpn")")"
+cd "$(dirname "$(find . -name "client.ovpn")")"
 
 # Check if the zip module is correctly installed. If not, install it.
 if ! command -v zip &> /dev/null; then
