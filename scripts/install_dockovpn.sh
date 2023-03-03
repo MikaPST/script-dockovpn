@@ -7,14 +7,28 @@
 # Check for the presence of Docker and Docker Compose
 if ! command -v docker &> /dev/null; then
     echo "Docker is not installed on this system. Automatic installation via the MikaPST/script-docker-dockercompose Github repo."
-    sudo chmod +x install_docker_dockercompose.sh && \
-    sudo ./install_docker_dockercompose.sh
+    ###### Script Install Docker and Docker-Compose (Debian/Debian-based) ######
+    # Projet Github by MikaPST
+    # https://github.com/MikaPST/script-docker-dockercompose
+
+    mkdir setup_docker \
+    && curl -o setup_docker/start.sh https://raw.githubusercontent.com/MikaPST/script-docker-dockercompose/main/start.sh \
+    && chmod +x setup_docker/start.sh \
+    && sudo ./setup_docker/start.sh \
+    && rm -r setup_docker/
 fi
 
 if ! command -v docker-compose &> /dev/null; then
     echo "Docker Compose is not installed on this system. Automatic installation via the MikaPST/script-docker-dockercompose Github repo."
-    sudo chmod +x install_docker_dockercompose.sh && \
-    sudo ./install_docker_dockercompose.sh
+    ###### Script Install Docker and Docker-Compose (Debian/Debian-based) ######
+    # Projet Github by MikaPST
+    # https://github.com/MikaPST/script-docker-dockercompose
+
+    mkdir setup_docker \
+    && curl -o setup_docker/start.sh https://raw.githubusercontent.com/MikaPST/script-docker-dockercompose/main/start.sh \
+    && chmod +x setup_docker/start.sh \
+    && sudo ./setup_docker/start.sh \
+    && rm -r setup_docker/
 fi
 
 # Create the docker-compose.yml file in the Dockovpn project's Git folder
