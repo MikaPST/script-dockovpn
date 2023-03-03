@@ -44,10 +44,9 @@ The client.opvn file can be used with the OpenVPN client to connect to Dockovpn.
 Complete installation of the [DockOvpn Project](https://github.com/dockovpn/dockovpn) with Docker and Docker-Compose dependencies.
 
 ```bash
-git clone https://github.com/MikaPST/script-dockovpn.git \
-&& cd script-dockovpn/scripts/ \
-&& sudo chmod +x install_dockovpn.sh \
-&& sudo ./install_dockovpn.sh
+curl -o install_dockovpn.sh https://raw.githubusercontent.com/MikaPST/script-dockovpn/main/scripts/install_dockovpn.sh \
+&& chmod +x install_dockovpn.sh \
+&& ./install_dockovpn.sh
 ```
 
 ## 🐳 Installation of Docker and Docker-Compose Only
