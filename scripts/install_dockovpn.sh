@@ -68,12 +68,12 @@ echo "Downloading the client.opvn file from the Dockovpn Docker container..."
 sudo docker-compose exec -d dockovpn wget -O /doc/Dockovpn/client.ovpn localhost:8080
 
 # Check that the client.ovpn file was downloaded successfully
-if ! find -name "client.ovpn" -print -quit | grep -q "."; then
+if ! find . -name "client.ovpn" -print -quit | grep -q "."; then
     echo -e "\033[31mThe client.ovpn file was not downloaded successfully from the OpenVPN container. Please check Docker logs for more information.\033[0m"
     exit 1
 fi
 
-cd openvpn_conf/
+cd "$(dirname "$(find . -name "client.ovpn")")"
 
 # Install Apache and Zip modules
 sudo apt-get install apache2 -y
