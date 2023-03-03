@@ -4,17 +4,13 @@
 # Projet Github by alekslitvinenk
 # https://github.com/dockovpn/dockovpn
 
-# Download the client.opvn file from the Dockovpn Docker container
-echo "Downloading the client.opvn file from the Dockovpn Docker container..."
-sudo docker-compose exec -d dockovpn wget -O /doc/Dockovpn/client.ovpn localhost:8080
-
 # Check that the client.ovpn file was downloaded successfully
-if ! find openvpn_conf/ -name "client.ovpn" -print -quit | grep -q "."; then
+if ! find ~/ -name "client.ovpn" -print -quit | grep -q "."; then
     echo -e "\033[31mThe client.ovpn file was not downloaded successfully from the OpenVPN container. Please check Docker logs for more information.\033[0m"
     exit 1
 fi
 
-cd openvpn_conf/
+cd "$(dirname "$(find ~/ -name "client.ovpn")")"
 
 # Check if the zip module is correctly installed. If not, install it.
 if ! command -v zip &> /dev/null; then
@@ -30,7 +26,6 @@ if ! command -v apache2 &> /dev/null; then
     echo "Apache web server is not installed. Loading installation..."
     sudo apt-get update -y
     sudo apt-get install apache2 -y
-    sudo apache2 reload
     echo "\e[32mApache web server successfully installed.\e[0m"
 else
     echo "\e[32mThe Apache web server is already installed.\e[0m"
